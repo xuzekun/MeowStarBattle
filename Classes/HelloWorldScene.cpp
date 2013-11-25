@@ -1,4 +1,5 @@
 #include "HelloWorldScene.h"
+#include "GameObjHero.h"
 
 using namespace cocos2d;
 
@@ -82,6 +83,18 @@ bool HelloWorld::init()
 
         // Add the sprite to HelloWorld layer as a child layer.
         this->addChild(pSprite, 0);
+
+		/*
+		CCSprite* cat = CCSprite::create("cat.png");
+		cat->setPosition(ccp(100,200));
+		this->addChild(cat,0);
+		*/
+
+		GameObjHero* hero = new GameObjHero();
+		hero->setPosition(ccp(size.width/2,-50));
+		this->addChild(hero);
+		hero->runAction(CCMoveBy::create(0.5,ccp(0,150)));
+
 
         bRet = true;
     } while (0);
