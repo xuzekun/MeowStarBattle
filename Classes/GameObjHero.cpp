@@ -1,4 +1,5 @@
 #include "GameObjHero.h"
+#include "HelloWorldScene.h"
 
 GameObjHero::GameObjHero(){}
 
@@ -54,6 +55,8 @@ void GameObjHero::onEnter()
 	offset = ccp(0,0);
 
 	isControl = false;
+
+	schedule(schedule_selector(GameObjHero::releaseBullet),0.5f);
 }
 
 bool GameObjHero::ccTouchBegan(CCTouch* touch,CCEvent* event)
@@ -120,4 +123,13 @@ void GameObjHero::touchDelegateRelease()
 void GameObjHero::touchDelegateRetain()
 {
 	this->retain();
+}
+
+void GameObjHero::releaseBullet(float f)
+{
+	if(isControl)
+	{
+		HelloWorld* p = (HelloWorld*)this->getParent();
+		p->releaseHeroBullet(getPositionX(),getPositionY() + 30);
+	}
 }

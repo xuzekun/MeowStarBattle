@@ -50,6 +50,12 @@
     <ClInclude Include="..\Classes\GameObjHero.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\GameObjEnemy.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameHeroBullet.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -62,6 +68,12 @@
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\GameObjHero.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GameObjEnemy.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GameHeroBullet.cpp">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>

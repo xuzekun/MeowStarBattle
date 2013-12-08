@@ -28,6 +28,7 @@ public:
 	virtual void touchDelegateRetain();
 	virtual void touchDelegateRelease();
 
+	void releaseBullet(float f);
 };
 
-#endif GameObjHero_H
+#endif 

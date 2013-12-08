@@ -1,7 +1,9 @@
 #include "HelloWorldScene.h"
-#include "GameObjHero.h"
+
 
 using namespace cocos2d;
+//CCArray* heroBullets;
+
 
 CCScene* HelloWorld::scene()
 {
@@ -75,7 +77,7 @@ bool HelloWorld::init()
         this->addChild(pLabel, 1);
 
         // 3. Add add a splash screen, show the cocos2d splash image.
-        CCSprite* pSprite = CCSprite::create("HelloWorld.png");
+        CCSprite* pSprite = CCSprite::create("Default.png");
         CC_BREAK_IF(! pSprite);
 
         // Place the sprite on the center of the screen
@@ -94,12 +96,58 @@ bool HelloWorld::init()
 		hero->setPosition(ccp(size.width/2,-50));
 		this->addChild(hero);
 		hero->runAction(CCMoveBy::create(0.5,ccp(0,150)));
+/*
+		GameObjEnemy* enemy = new GameObjEnemy();
+		enemy->setPosition(ccp(300,200));
+		this->addChild(enemy);
 
+*/
+		CCArray* enemys = CCArray::create();
+		for (int i=0;i<3;i++)
+		{
+			GameObjEnemy* enemy = new GameObjEnemy();
+			enemy->setPosition(ccp(size.width/4 * (i+1),size.height + 50));
+			enemy->setScale(0.5);
+			enemy->setType(i+1);
+			
+			enemys->addObject(enemy);
+			this->addChild(enemy,1);
+			enemy->movestart();
+		}
+		
+		//heroBullets = CCArray::create();
+		//heroBullets->ret
+		heroBullets = new GameHeroBullet*[5];
+		
+		for(int i=0;i<5;i++)
+		{
+			heroBullets[i] = new GameHeroBullet();
+			this->addChild(heroBullets[i],3);
+			heroBullets[i]->setScale(0.5);
+			heroBullets[i]->setIsNotVisable();
+			//heroBullets[i]->setPosition(30*i,200);
+		}
 
         bRet = true;
     } while (0);
 
     return bRet;
+}
+
+void HelloWorld::releaseHeroBullet(int x,int y)
+{
+	for (int i=0;i< 5;i++)
+	{
+		if (!heroBullets[i]->getIsVisible())
+		{
+			heroBullets[i]->setPosition(x,y);
+			heroBullets[i]->setIsVisable();
+			//heroBullets[i]->getVisible();
+			break;
+		}
+		
+	}
+	
 }
 
 void HelloWorld::menuCloseCallback(CCObject* pSender)
