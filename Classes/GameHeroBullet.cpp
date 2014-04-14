@@ -13,8 +13,11 @@ void GameHeroBullet::onEnter()
 {
 	CCNode::onEnter();
 	this->setContentSize(CCSizeMake(21,52));
-	CCSprite* mainbody = CCSprite::create("catBullet.png");
+	mainbody = CCSprite::create("catBullet.png");
 	addChild(mainbody);
+
+	
+
 }
 
 void GameHeroBullet::onExit()
@@ -26,6 +29,8 @@ void GameHeroBullet::onExit()
 void GameHeroBullet::setIsVisable()
 {
 	this->setVisible(true);
+//	mainbody->setVisible(true);
+	//bang->setVisible(false);
 	isVisible = true;
 	this->runAction(CCSequence::create(CCMoveTo::create((550 - this->getPositionY())/300,ccp(this->getPositionX(),550)),CCCallFunc::create(this,callfunc_selector(GameHeroBullet::setIsNotVisable)),NULL));
 }
@@ -37,7 +42,10 @@ void GameHeroBullet::setIsNotVisable()
 	this->stopAllActions();
 }
 
-bool GameHeroBullet::getIsVisible()
+bool GameHeroBullet::getIsVisable()
 {
 	return isVisible;
 }
+
+
+

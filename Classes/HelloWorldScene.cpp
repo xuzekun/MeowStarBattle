@@ -138,7 +138,7 @@ void HelloWorld::releaseHeroBullet(int x,int y)
 {
 	for (int i=0;i< 5;i++)
 	{
-		if (!heroBullets[i]->getIsVisible())
+		if (!heroBullets[i]->getIsVisable())
 		{
 			heroBullets[i]->setPosition(x,y);
 			heroBullets[i]->setIsVisable();

@@ -2,7 +2,7 @@
 #define __APP_DELEGATE_H__
 
 #include "cocos2d.h"
-
+#include "GameMenuScene.h"
 /**
 @brief    The cocos2d Application.
 

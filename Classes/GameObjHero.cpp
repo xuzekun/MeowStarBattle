@@ -1,5 +1,5 @@
 #include "GameObjHero.h"
-#include "HelloWorldScene.h"
+#include "GameMainScene.h"
 
 GameObjHero::GameObjHero(){}
 
@@ -56,7 +56,7 @@ void GameObjHero::onEnter()
 
 	isControl = false;
 
-	schedule(schedule_selector(GameObjHero::releaseBullet),0.5f);
+	schedule(schedule_selector(GameObjHero::releaseBullet),0.3f);
 }
 
 bool GameObjHero::ccTouchBegan(CCTouch* touch,CCEvent* event)
@@ -129,7 +129,7 @@ void GameObjHero::releaseBullet(float f)
 {
 	if(isControl)
 	{
-		HelloWorld* p = (HelloWorld*)this->getParent();
-		p->releaseHeroBullet(getPositionX(),getPositionY() + 30);
+		GameMain* p = (GameMain*)this->getParent();
+		p->releaseHeroBullets(getPositionX(),getPositionY() + 30);
 	}
 }

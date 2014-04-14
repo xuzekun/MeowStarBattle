@@ -24,6 +24,8 @@ public:
 	void restart();
 	void movestart();
 	void setType(int type);
+	void releaseBullet(float f);
+	bool getIslife();
 };
 
 #endif 

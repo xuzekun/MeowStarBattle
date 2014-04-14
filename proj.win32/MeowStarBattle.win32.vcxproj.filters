@@ -56,6 +56,15 @@
     <ClInclude Include="..\Classes\GameHeroBullet.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\GameMenuScene.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameMainScene.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameEnemyBullet.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -74,6 +83,15 @@
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\GameHeroBullet.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GameMenuScene.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GameMainScene.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GameEnemyBullet.cpp">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>

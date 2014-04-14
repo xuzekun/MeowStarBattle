@@ -1,4 +1,5 @@
 #include "GameObjEnemy.h"
+#include "GameMainScene.h"
 
 GameObjEnemy::GameObjEnemy(){}
 
@@ -21,7 +22,13 @@ void GameObjEnemy::onEnter()
 
 	boom = CCSprite::create("Boom1.png");
 	addChild(boom);
+	boom->setVisible(false);
+
+	islife = true;
+
+	//
 	//setDie();
+//	releaseBullet();
 }
 
 void GameObjEnemy::onExit()
@@ -31,7 +38,11 @@ void GameObjEnemy::onExit()
 
 void GameObjEnemy::setDie()
 {
-	boom->setPosition(ccp(-100,0));
+	islife = false;
+	//boom->setPosition(ccp(-100,0));
+	mainbody->setVisible(false);
+	boom->setVisible(true);
+	this->stopAllActions();
 	CCAnimation* boomAnimation = CCAnimation::create();
 	boomAnimation->addSpriteFrameWithFileName("Boom1.png");
 	boomAnimation->addSpriteFrameWithFileName("Boom2.png");
@@ -40,7 +51,7 @@ void GameObjEnemy::setDie()
 	boomAnimation->addSpriteFrameWithFileName("Boom5.png");
 	boomAnimation->setDelayPerUnit(0.1f);
 	boomAnimation->setRestoreOriginalFrame(true);
-	boom->runAction(CCRepeatForever::create(CCAnimate::create(boomAnimation)));
+	boom->runAction(CCSequence::create(CCAnimate::create(boomAnimation),CCCallFunc::create(this,callfunc_selector(GameObjEnemy::restart)),NULL));
 
 }
 
@@ -58,10 +69,12 @@ void GameObjEnemy::restart()
 	mainbody->setVisible(true);
 	boom->setVisible(false);
 	this->movestart();
+	
 }
 
 void GameObjEnemy::movestart()
 {
+	islife = true;
 	ccBezierConfig bezier1;
 	bezier1.controlPoint_1 = CCPointMake(this->getPositionX()-400,330);
 	bezier1.controlPoint_2 = CCPointMake(this->getPositionX()+400,280);
@@ -89,5 +102,17 @@ void GameObjEnemy::movestart()
 		this->runAction(CCSequence::create(bezierBy2,CCCallFunc::create(this,callfunc_selector(GameObjEnemy::restart)),NULL));
 		break;
 	}
+	schedule(schedule_selector(GameObjEnemy::releaseBullet),1.5f);
+}
 
+void GameObjEnemy::releaseBullet(float f)
+{
+	//CCSize size = CCDirector::sharedDirector()->getWinSize();
+	GameMain* p = (GameMain*)this->getParent();
+	p->releaseEnemyBullets(this->getPositionX(),this->getPositionY()-20);
+}
+
+bool GameObjEnemy::getIslife()
+{
+	return islife;
 }

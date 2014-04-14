@@ -8,15 +8,20 @@ class GameHeroBullet:public CCNode
 {
 private:
 	bool isVisible;
+	CCSprite* mainbody;
+
+
 public:
 	GameHeroBullet();
 	virtual ~GameHeroBullet();
 	void setIsNotVisable();
 	void setIsVisable();
-	bool getIsVisible();
+	bool getIsVisable();
 
 	virtual void onEnter();
 	virtual void onExit();
+
+	
 };
 
 #endif
