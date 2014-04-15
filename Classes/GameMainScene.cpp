@@ -117,6 +117,22 @@ bool GameMain::init()
 		ui->addChild(blood3);
 		this->addChild(ui,4);
 
+		//set GameOver Menu
+		gameover = CCSprite::create("gameover.png");
+		gameover->setPosition(ccp(size.width/2,size.height/2+50));
+		gameover->setScale(0.5);
+		gameover->setVisible(false);
+		this->addChild(gameover,5);
+
+		CCMenuItemImage* pCloseItem = CCMenuItemImage::create("back.png","back.png",this,menu_selector(GameMain::menuCloseCallBack));
+		pCloseItem->setPosition(ccp(size.width/2,size.height/2-20));
+		pCloseItem->setScale(0.7);
+
+		overMenu = CCMenu::create(pCloseItem,NULL);
+		overMenu->setPosition(ccp(0,0));
+		overMenu->setVisible(false);
+		this->addChild(overMenu,5);
+
 		scheduleUpdate();
 
 		///////////
@@ -309,6 +325,22 @@ void GameMain::setHeroHurt()
 		break;
 
 	case 0:
+		setGameOver();
 		break;
 	}
+}
+
+void GameMain::menuCloseCallBack(CCObject* pSender)
+{
+	CCDirector::sharedDirector()->replaceScene(GameMenu::scene());
+}
+
+void GameMain::setGameOver()
+{
+	gameover->setVisible(true);
+	overMenu->setVisible(true);
+	gameover->setScale(0);
+	overMenu->setScale(0);
+	gameover->runAction(CCScaleTo::create(0.5,0.5));
+	overMenu->runAction(CCScaleTo::create(0.5,0.8));
 }

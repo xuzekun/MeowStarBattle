@@ -6,7 +6,7 @@
 #include "GameObjEnemy.h"
 #include "GameHeroBullet.h"
 #include "GameEnemyBullet.h"
-
+#include "GameMenuScene.h"
 using namespace cocos2d;
 
 class GameMain:public CCLayer
@@ -29,6 +29,9 @@ private:
 	CCSprite* blood2;
 	CCSprite* blood3;
 
+	CCSprite* gameover;
+	CCMenu* overMenu;
+
 public:
 	static CCScene* scene();
 	virtual bool init();
@@ -41,6 +44,9 @@ public:
 
 	bool isCollion(CCPoint p1,CCPoint p2,int w1,int h1,int w2,int h2);
 	void setHeroHurt();
+
+	void menuCloseCallBack(CCObject* pSender);
+	void setGameOver();
 
 	CCLabelTTF* l;
 };
