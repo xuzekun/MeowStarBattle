@@ -26,6 +26,8 @@ public:
 	void setType(int type);
 	void releaseBullet(float f);
 	bool getIslife();
+
+	void stopBullets();
 };
 
 #endif 

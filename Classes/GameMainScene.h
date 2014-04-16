@@ -31,7 +31,8 @@ private:
 
 	CCSprite* gameover;
 	CCMenu* overMenu;
-
+	bool isReduce;
+	bool isOver;
 public:
 	static CCScene* scene();
 	virtual bool init();
@@ -47,7 +48,7 @@ public:
 
 	void menuCloseCallBack(CCObject* pSender);
 	void setGameOver();
-
+	void resetReduce();
 	CCLabelTTF* l;
 };
 

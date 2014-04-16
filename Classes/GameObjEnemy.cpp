@@ -25,7 +25,7 @@ void GameObjEnemy::onEnter()
 	boom->setVisible(false);
 
 	islife = true;
-
+	schedule(schedule_selector(GameObjEnemy::releaseBullet),1.5f);
 	//
 	//setDie();
 //	releaseBullet();
@@ -102,7 +102,7 @@ void GameObjEnemy::movestart()
 		this->runAction(CCSequence::create(bezierBy2,CCCallFunc::create(this,callfunc_selector(GameObjEnemy::restart)),NULL));
 		break;
 	}
-	schedule(schedule_selector(GameObjEnemy::releaseBullet),1.5f);
+	
 }
 
 void GameObjEnemy::releaseBullet(float f)
@@ -115,4 +115,9 @@ void GameObjEnemy::releaseBullet(float f)
 bool GameObjEnemy::getIslife()
 {
 	return islife;
+}
+
+void GameObjEnemy::stopBullets()
+{
+	this->unschedule(schedule_selector(GameObjEnemy::releaseBullet));
 }

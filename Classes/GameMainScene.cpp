@@ -133,13 +133,15 @@ bool GameMain::init()
 		overMenu->setVisible(false);
 		this->addChild(overMenu,5);
 
+		isReduce = false;
+		isOver = false;
 		scheduleUpdate();
 
 		///////////
 
-		CCLabelTTF* l = CCLabelTTF::create("0","Î¢ÈíÑÅºÚ",24);
-		l->setPosition(ccp(300,460));
-		this->addChild(l,5,10);
+		//CCLabelTTF* l = CCLabelTTF::create("0","Î¢ÈíÑÅºÚ",24);
+		//l->setPosition(ccp(300,460));
+		//this->addChild(l,5,10);
 
 	//	CCLabelAtlas* mark = CCLabelAtlas::create("./0123456789","fps_images.png",12,32,'.');
 	//	mark->setPosition(ccp(100,400));
@@ -184,114 +186,120 @@ void GameMain::releaseEnemyBullets(int x,int y)
 
 void GameMain::update(float time)
 {
-	bg1->setPosition(ccp(bg1->getPositionX(),bg1->getPositionY() - 1));
-	bg2->setPosition(ccp(bg2->getPositionX(),bg2->getPositionY() - 1));
-
-	CCSize size = CCDirector::sharedDirector()->getWinSize();
-
-	if(bg1->getPositionY() <= -480)
+	if(!isOver)
 	{
-		bg1->setPosition(ccp(0,size.height));
-	}
+		bg1->setPosition(ccp(bg1->getPositionX(),bg1->getPositionY() - 1));
+		bg2->setPosition(ccp(bg2->getPositionX(),bg2->getPositionY() - 1));
 
-	if(bg2->getPositionY() <= -480)
-	{
-		bg2->setPosition(ccp(0,size.height));
-	}
-static int kill=0;
-//enemy vs herobullets
-	CCPoint heroPos = hero->getPosition();
+		CCSize size = CCDirector::sharedDirector()->getWinSize();
 
-	for (int i=0;i<3;i++)
-	{
-		if(enemys[i]->getIslife())
+		if(bg1->getPositionY() <= -480)
 		{
-			CCPoint enemyPos = enemys[i]->getPosition();
-			for(int j=0;j<heroBulletsNum;j++)
+			bg1->setPosition(ccp(0,size.height));
+		}
+
+		if(bg2->getPositionY() <= -480)
+		{
+			bg2->setPosition(ccp(0,size.height));
+		}
+	static int kill=0;
+	//enemy vs herobullets
+		CCPoint heroPos = hero->getPosition();
+
+		for (int i=0;i<3;i++)
+		{
+			if(enemys[i]->getIslife())
 			{
-				if (heroBullets[j]->getIsVisable())
+				CCPoint enemyPos = enemys[i]->getPosition();
+				for(int j=0;j<heroBulletsNum;j++)
 				{
-					CCPoint bulletPos = heroBullets[j]->getPosition();
-					if(isCollion(enemyPos,bulletPos,5,13,21,28))
+					if (heroBullets[j]->getIsVisable())
 					{
-						//enemys[i]->setVisible(false);
-						enemys[i]->setDie();
-						heroBullets[j]->setIsNotVisable();
-						kill++;
-						mark +=20;
-						break;
-						//heroBullets[]
+						CCPoint bulletPos = heroBullets[j]->getPosition();
+						if(isCollion(enemyPos,bulletPos,5,13,21,28))
+						{
+							//enemys[i]->setVisible(false);
+							enemys[i]->setDie();
+							heroBullets[j]->setIsNotVisable();
+							kill++;
+							mark +=20;
+							break;
+							//heroBullets[]
+						}
 					}
 				}
 			}
 		}
-	}
-	//herobullets vs enemybullets
-	static int collion = 0;
-	for (int i=0;i<heroBulletsNum;i++)
-	{
-		if(heroBullets[i]->getIsVisable())
+		//herobullets vs enemybullets
+		static int collion = 0;
+		for (int i=0;i<heroBulletsNum;i++)
 		{
-			CCPoint herobulletsPos = heroBullets[i]->getPosition();
-			for (int j=0;j<enemyBulletsNum;j++)
+			if(heroBullets[i]->getIsVisable())
 			{
-				if(enemyBullets[j]->getIsvisble())
+				CCPoint herobulletsPos = heroBullets[i]->getPosition();
+				for (int j=0;j<enemyBulletsNum;j++)
 				{
-					CCPoint enemybulletsPos = enemyBullets[j]->getPosition();
-					if(isCollion(herobulletsPos,enemybulletsPos,5,13,5,13))
+					if(enemyBullets[j]->getIsvisble())
 					{
-						heroBullets[i]->setIsNotVisable();
-					//	enemyBullets[j]->setIsNotVisable();
-						enemyBullets[j]->setBang();
-						collion++;
-						mark +=5;
-						break;
+						CCPoint enemybulletsPos = enemyBullets[j]->getPosition();
+						if(isCollion(herobulletsPos,enemybulletsPos,5,13,5,13))
+						{
+							heroBullets[i]->setIsNotVisable();
+						//	enemyBullets[j]->setIsNotVisable();
+							enemyBullets[j]->setBang();
+							collion++;
+							mark +=5;
+							break;
+						}
 					}
 				}
-			}
 
+			}
 		}
-	}
 	
-	//hero vs enemy
-//	static int heroLife = 10;
-	for (int i=0;i<3;i++)
-	{
-		if(enemys[i]->getIslife())
+		//hero vs enemy
+	//	static int heroLife = 10;
+		if(!isReduce)
 		{
-			CCPoint enemyPos = enemys[i]->getPosition();
+			for (int i=0;i<3;i++)
+			{
+				if(enemys[i]->getIslife())
+				{
+					CCPoint enemyPos = enemys[i]->getPosition();
 			
-			if(isCollion(heroPos,enemyPos,21,22.5,21,28))
-			{
-				enemys[i]->setDie();
-				setHeroHurt();
-				mark += 20;
+					if(isCollion(heroPos,enemyPos,21,22.5,21,28))
+					{
+						enemys[i]->setDie();
+						setHeroHurt();
+						mark += 20;
+					}
+				}
 			}
-		}
-	}
 
-	//hero vs enemybullets
-	for (int i=0;i<enemyBulletsNum;i++)
-	{
-		if(enemyBullets[i]->getIsvisble())
-		{
-			CCPoint enemyBulletPos = enemyBullets[i]->getPosition();
-			if(isCollion(heroPos,enemyBulletPos,21,22.5,5,13))
+			//hero vs enemybullets
+			for (int i=0;i<enemyBulletsNum;i++)
 			{
-				setHeroHurt();
-				//enemyBullets[i]->setIsNotVisable();
-				enemyBullets[i]->setBang();
+				if(enemyBullets[i]->getIsvisble())
+				{
+					CCPoint enemyBulletPos = enemyBullets[i]->getPosition();
+					if(isCollion(heroPos,enemyBulletPos,21,22.5,5,13))
+					{
+						setHeroHurt();
+						//enemyBullets[i]->setIsNotVisable();
+						enemyBullets[i]->setBang();
+					}
+				}
 			}
 		}
 	}
-	
+	/*
 	this->removeChildByTag(10);
 	char s[20];
 	sprintf(s,"%d %d %d",kill,collion,heroLife);
 	CCLabelTTF* l = CCLabelTTF::create(s,"Î¢ÈíÑÅºÚ",24);
 	l->setPosition(ccp(250,440));
 	this->addChild(l,5,10);
-	
+	*/
 	char str[10];
 	sprintf(str,"%d",mark);
 	markLabel->setString(str);
@@ -306,7 +314,9 @@ bool GameMain::isCollion(CCPoint p1,CCPoint p2,int w1,int h1,int w2,int h2)
 }
 
 void GameMain::setHeroHurt()
-{
+{	
+	hero->runAction(CCSequence::create(CCBlink::create(2,6),CCCallFunc::create(this,callfunc_selector(GameMain::resetReduce)),NULL));
+	isReduce = true;
 	switch(heroLife)
 	{
 	case 3:
@@ -325,9 +335,15 @@ void GameMain::setHeroHurt()
 		break;
 
 	case 0:
-		setGameOver();
+		if(!isOver)
+		{
+			setGameOver();
+			isOver = true;	
+		}
 		break;
+		
 	}
+
 }
 
 void GameMain::menuCloseCallBack(CCObject* pSender)
@@ -337,10 +353,25 @@ void GameMain::menuCloseCallBack(CCObject* pSender)
 
 void GameMain::setGameOver()
 {
+	hero->stopAllActions();
+	hero->setVisible(false);
+	for (int i=0;i<3;i++)
+	{
+		enemys[i]->stopBullets();
+		enemys[i]->setVisible(false);
+	}
+
+
 	gameover->setVisible(true);
 	overMenu->setVisible(true);
 	gameover->setScale(0);
 	overMenu->setScale(0);
 	gameover->runAction(CCScaleTo::create(0.5,0.5));
 	overMenu->runAction(CCScaleTo::create(0.5,0.8));
+
+}
+
+void GameMain::resetReduce()
+{
+	isReduce = false;
 }
