@@ -65,10 +65,17 @@ bool GameMenu::init()
 	aboutItem->setScale(0.5);
 	aboutItem->setPosition(ccp(size.width/2,size.height/2 -140));
 
-	CCMenu* mainMenu = CCMenu::create(newGameItem,continueItem,aboutItem,NULL);
+	soundItem = CCMenuItemImage::create("sound-on-A.png","sound-on-B.png",this,menu_selector(GameMenu::menuSoundCallback));
+	soundItem->setScale(0.5);
+	soundItem->setPosition(ccp(size.width-40,40));
+
+	CCMenu* mainMenu = CCMenu::create(newGameItem,continueItem,aboutItem,soundItem,NULL);
 	mainMenu->setPosition(CCPointZero);
 	this->addChild(mainMenu,3,3);
 
+	isSound = true;
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic("background.mp3",true);
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(0.5);
 	return true;
 }
 
@@ -85,6 +92,24 @@ void GameMenu::menuContinueCallback(CCObject* pSender)
 void GameMenu::menuAboutCallback(CCObject* pSender)
 {
 
+}
+
+void GameMenu::menuSoundCallback(CCObject* pSender)
+{
+	if(!isSound)
+	{
+		soundItem->setNormalImage(CCSprite::create("sound-on-A.png"));
+		soundItem->setDisabledImage(CCSprite::create("sound-on-B.png"));
+		CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic("background.mp3",true);
+		isSound = true;
+	}
+	else
+	{
+		soundItem->setNormalImage(CCSprite::create("sound-off-A.png"));
+		soundItem->setDisabledImage(CCSprite::create("sound-off-B.png"));
+		CocosDenshion::SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
+		isSound = false;
+	}
 }
 
 void GameMenu::onEnter()

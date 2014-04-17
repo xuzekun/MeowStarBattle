@@ -7,6 +7,7 @@
 #include "GameHeroBullet.h"
 #include "GameEnemyBullet.h"
 #include "GameMenuScene.h"
+#include "SimpleAudioEngine.h"
 using namespace cocos2d;
 
 class GameMain:public CCLayer

@@ -219,6 +219,7 @@ void GameMain::update(float time)
 						if(isCollion(enemyPos,bulletPos,5,13,21,28))
 						{
 							//enemys[i]->setVisible(false);
+					//		CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("boom.wav");
 							enemys[i]->setDie();
 							heroBullets[j]->setIsNotVisable();
 							kill++;
@@ -244,6 +245,7 @@ void GameMain::update(float time)
 						CCPoint enemybulletsPos = enemyBullets[j]->getPosition();
 						if(isCollion(herobulletsPos,enemybulletsPos,5,13,5,13))
 						{
+						//	CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("bulletsCollion.mp3");
 							heroBullets[i]->setIsNotVisable();
 						//	enemyBullets[j]->setIsNotVisable();
 							enemyBullets[j]->setBang();
@@ -269,6 +271,7 @@ void GameMain::update(float time)
 			
 					if(isCollion(heroPos,enemyPos,21,22.5,21,28))
 					{
+					//	CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("boom.wav");
 						enemys[i]->setDie();
 						setHeroHurt();
 						mark += 20;
