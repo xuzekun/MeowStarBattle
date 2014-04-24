@@ -48,6 +48,7 @@ public:
 	void setHeroHurt();
 
 	void menuCloseCallBack(CCObject* pSender);
+	void menuRetryCallBack(CCObject* pSender);
 	void setGameOver();
 	void resetReduce();
 	CCLabelTTF* l;

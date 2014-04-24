@@ -124,11 +124,15 @@ bool GameMain::init()
 		gameover->setVisible(false);
 		this->addChild(gameover,5);
 
-		CCMenuItemImage* pCloseItem = CCMenuItemImage::create("back.png","back.png",this,menu_selector(GameMain::menuCloseCallBack));
-		pCloseItem->setPosition(ccp(size.width/2,size.height/2-20));
-		pCloseItem->setScale(0.7);
+		CCMenuItemImage* pRetryItem = CCMenuItemImage::create("retry.png","retry.png",this,menu_selector(GameMain::menuRetryCallBack));
+		pRetryItem->setPosition(ccp(size.width/2,size.height/2-20));
+		pRetryItem->setScale(0.8);
 
-		overMenu = CCMenu::create(pCloseItem,NULL);
+		CCMenuItemImage* pCloseItem = CCMenuItemImage::create("back.png","back.png",this,menu_selector(GameMain::menuCloseCallBack));
+		pCloseItem->setPosition(ccp(size.width/2,size.height/2-70));
+		pCloseItem->setScale(0.8);
+
+		overMenu = CCMenu::create(pRetryItem,pCloseItem,NULL);
 		overMenu->setPosition(ccp(0,0));
 		overMenu->setVisible(false);
 		this->addChild(overMenu,5);
@@ -347,6 +351,11 @@ void GameMain::setHeroHurt()
 		
 	}
 
+}
+
+void GameMain::menuRetryCallBack(CCObject* pSender)
+{
+	CCDirector::sharedDirector()->replaceScene(GameMain::scene());
 }
 
 void GameMain::menuCloseCallBack(CCObject* pSender)

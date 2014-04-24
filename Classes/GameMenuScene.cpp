@@ -56,20 +56,24 @@ bool GameMenu::init()
 	newGameItem->setScale(0.5);
 	newGameItem->setPosition(ccp(size.width/2,size.height/2 - 20));
 	//newGameItem->setEnabled(false);
-
+	/*
 	CCMenuItemImage* continueItem = CCMenuItemImage::create("continueA.png","continueB.png",this,menu_selector(GameMenu::menuContinueCallback));
 	continueItem->setScale(0.5);
 	continueItem->setPosition(ccp(size.width/2,size.height/2 - 80));
-
+	*/
 	CCMenuItemImage* aboutItem = CCMenuItemImage::create("aboutA.png","aboutB.png",this,menu_selector(GameMenu::menuAboutCallback));
 	aboutItem->setScale(0.5);
-	aboutItem->setPosition(ccp(size.width/2,size.height/2 -140));
+	aboutItem->setPosition(ccp(size.width/2,size.height/2 -100));
 
 	soundItem = CCMenuItemImage::create("sound-on-A.png","sound-on-B.png",this,menu_selector(GameMenu::menuSoundCallback));
 	soundItem->setScale(0.5);
 	soundItem->setPosition(ccp(size.width-40,40));
 
-	CCMenu* mainMenu = CCMenu::create(newGameItem,continueItem,aboutItem,soundItem,NULL);
+	CCMenuItemImage* closeItem = CCMenuItemImage::create("CloseNormal.png","CloseSelected.png",this,menu_selector(GameMenu::menuCloseCallback));
+	closeItem->setPosition(ccp(40,40));
+
+	//CCMenu* mainMenu = CCMenu::create(newGameItem,continueItem,aboutItem,soundItem,NULL);
+	CCMenu* mainMenu = CCMenu::create(newGameItem,aboutItem,soundItem,closeItem,NULL);
 	mainMenu->setPosition(CCPointZero);
 	this->addChild(mainMenu,3,3);
 
@@ -91,7 +95,7 @@ void GameMenu::menuContinueCallback(CCObject* pSender)
 
 void GameMenu::menuAboutCallback(CCObject* pSender)
 {
-
+	CCDirector::sharedDirector()->replaceScene(GameAbout::scene());
 }
 
 void GameMenu::menuSoundCallback(CCObject* pSender)
@@ -110,6 +114,11 @@ void GameMenu::menuSoundCallback(CCObject* pSender)
 		CocosDenshion::SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
 		isSound = false;
 	}
+}
+
+void GameMenu::menuCloseCallback(CCObject* pSender)
+{
+	CCDirector::sharedDirector()->end();
 }
 
 void GameMenu::onEnter()
